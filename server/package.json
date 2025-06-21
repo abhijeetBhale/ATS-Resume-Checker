@@ -1,0 +1,38 @@
+{
+  "name": "ats-resume-checker-server",
+  "version": "1.0.0",
+  "description": "Backend API for AI ATS Resume Score Checker",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "natural": "^6.10.4",
+    "stopword": "^2.0.8",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0"
+  },
+  "keywords": [
+    "ats",
+    "resume",
+    "api",
+    "openai",
+    "nlp"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+} 
