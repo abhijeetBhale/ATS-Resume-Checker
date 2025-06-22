@@ -52,17 +52,32 @@ An intelligent resume analysis tool that evaluates resumes against job descripti
 
 3. **Set up environment variables**
    ```bash
-   cp .env.example .env
-   ```
-   Add your OpenAI API key to `.env`:
-   ```
-   OPENAI_API_KEY=your_openai_api_key_here
+   # Copy the example environment file
+   cp env.example .env
+   
+   # Edit .env and add your OpenAI API key
+   # Get your API key from: https://platform.openai.com/api-keys
    ```
 
-4. **Start development servers**
+4. **Add your OpenAI API key**
+   - Go to [OpenAI Platform](https://platform.openai.com/api-keys)
+   - Create a new API key
+   - Add it to your `.env` file:
+   ```
+   OPENAI_API_KEY=your_actual_api_key_here
+   ```
+
+5. **Start development servers**
    ```bash
    npm run dev
    ```
+
+## 🔐 Security Notes
+
+- **Never commit your `.env` file** - it contains sensitive API keys
+- The `.env` file is already in `.gitignore` to prevent accidental commits
+- Use `env.example` as a template for required environment variables
+- For production, set environment variables securely on your hosting platform
 
 ## 🎯 Usage
 
@@ -101,6 +116,8 @@ npm run build
 cd server
 npm start
 ```
+
+**Important**: Set your `OPENAI_API_KEY` environment variable in your hosting platform's dashboard.
 
 ## 🤝 Contributing
 
