@@ -41,8 +41,7 @@ async function analyzeResume(resumeText, jobDescription, fileName = 'Resume') {
 
     // Step 7: Generate detailed feedback
     const feedback = generateDetailedFeedback({
-      resumeKeywords,
-      jobKeywords,
+      keywordMatch,
       structureAnalysis,
       aiSuggestions,
       overallScore
@@ -231,33 +230,37 @@ function generateDetailedFeedback(analysis) {
     feedback.summary = "Your resume needs significant improvements to pass ATS screening. Follow the recommendations below.";
   }
 
-  // Identify strengths
-  if (analysis.keywordMatch.matchPercentage >= 70) {
+  // Identify strengths - add null checks
+  if (analysis.keywordMatch && analysis.keywordMatch.matchPercentage >= 70) {
     feedback.strengths.push("Strong keyword alignment with job requirements");
   }
-  if (analysis.structureAnalysis.score >= 80) {
+  if (analysis.structureAnalysis && analysis.structureAnalysis.score >= 80) {
     feedback.strengths.push("Good ATS-friendly formatting and structure");
   }
-  if (analysis.aiSuggestions.contentQualityScore >= 80) {
+  if (analysis.aiSuggestions && analysis.aiSuggestions.contentQualityScore >= 80) {
     feedback.strengths.push("High-quality content with good impact statements");
   }
 
-  // Identify weaknesses
-  if (analysis.keywordMatch.missing.length > 5) {
+  // Identify weaknesses - add null checks
+  if (analysis.keywordMatch && analysis.keywordMatch.missing && analysis.keywordMatch.missing.length > 5) {
     feedback.weaknesses.push(`Missing ${analysis.keywordMatch.missing.length} important keywords from the job description`);
   }
-  if (analysis.structureAnalysis.issues.length > 0) {
+  if (analysis.structureAnalysis && analysis.structureAnalysis.issues && analysis.structureAnalysis.issues.length > 0) {
     feedback.weaknesses.push("Several formatting and structure issues detected");
   }
-  if (analysis.aiSuggestions.contentQualityScore < 70) {
+  if (analysis.aiSuggestions && analysis.aiSuggestions.contentQualityScore < 70) {
     feedback.weaknesses.push("Content could be more impactful and specific");
   }
 
-  // Generate recommendations
+  // Generate recommendations - add null checks
+  const generalSuggestions = analysis.aiSuggestions && analysis.aiSuggestions.general ? analysis.aiSuggestions.general.slice(0, 3) : [];
+  const specificSuggestions = analysis.aiSuggestions && analysis.aiSuggestions.specific ? analysis.aiSuggestions.specific.slice(0, 3) : [];
+  const structureRecommendations = analysis.structureAnalysis && analysis.structureAnalysis.recommendations ? analysis.structureAnalysis.recommendations.slice(0, 2) : [];
+  
   feedback.recommendations = [
-    ...analysis.aiSuggestions.general.slice(0, 3),
-    ...analysis.aiSuggestions.specific.slice(0, 3),
-    ...analysis.structureAnalysis.recommendations.slice(0, 2)
+    ...generalSuggestions,
+    ...specificSuggestions,
+    ...structureRecommendations
   ];
 
   return feedback;
