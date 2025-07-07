@@ -80,11 +80,14 @@ const AnalysisPage = () => {
     setIsAnalyzing(true);
 
     try {
-      const response = await axios.post('/api/analyze', {
-        resumeText: resumeText.trim(),
-        jobDescription: jobDescription.trim(),
-        fileName: fileName || 'Resume'
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/analyze`,
+        {
+          resumeText: resumeText.trim(),
+          jobDescription: jobDescription.trim(),
+          fileName: fileName || 'Resume'
+        }
+      );
 
       if (response.data.success) {
         // Store results in localStorage for the results page
