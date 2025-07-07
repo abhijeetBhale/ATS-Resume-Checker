@@ -39,10 +39,10 @@ const HomePage = () => {
   ];
 
   const stats = [
-    { icon: Users, value: '10,000+', label: 'Resumes Analyzed' },
-    { icon: Star, value: '4.9/5', label: 'User Rating' },
-    { icon: TrendingUp, value: '85%', label: 'Success Rate' },
-    { icon: Zap, value: '< 30s', label: 'Analysis Time' }
+    { icon: Users, value: '100+', label: 'Resumes Analyzed' },
+    { icon: Star, value: '4.0/5', label: 'User Rating' },
+    { icon: TrendingUp, value: '80%', label: 'Success Rate' },
+    { icon: Zap, value: '< 15s', label: 'Analysis Time' }
   ];
 
   return (

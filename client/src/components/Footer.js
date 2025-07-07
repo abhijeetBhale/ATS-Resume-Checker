@@ -15,7 +15,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gradient">ATS Resume Checker</h3>
-                <p className="text-sm text-gray-500">AI-Powered Resume Analysis</p>
+                 <p className="text-sm text-gray-500">Resume Analysis Developed by <strong> Abhijeet Bhale </strong></p>
               </div>
             </Link>
             <p className="text-gray-600 text-sm">
@@ -52,7 +52,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a 
-                  href="mailto:support@atsresumechecker.com" 
+                  href="mailto:abhijeetbhale7@gmail.com" 
                   className="flex items-center space-x-2 text-sm text-gray-600 hover:text-primary-600 transition-colors"
                 >
                   <Mail className="w-4 h-4" />
@@ -61,7 +61,7 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="https://github.com/yourusername/ats-resume-checker" 
+                  href="https://github.com/abhijeetBhale/ats-resume-checker" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center space-x-2 text-sm text-gray-600 hover:text-primary-600 transition-colors"
@@ -77,7 +77,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-500">
-            © 2024 ATS Resume Checker. All rights reserved.
+            © 2025 ATS Resume Checker. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-sm text-gray-500 hover:text-gray-700">
