@@ -34,11 +34,15 @@ const AnalysisPage = () => {
       const formData = new FormData();
       formData.append('resume', file);
 
-      const response = await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/upload`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
       if (response.data.success) {
         setResumeText(response.data.data.text);
