@@ -30,7 +30,7 @@ app.use(compression());
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: 'https://ats-resume-checker-frontend.onrender.com', // Hardcoded frontend URL for CORS
   credentials: true
 }));
 
