@@ -14,6 +14,8 @@ const upload = multer({
     // Accept PDF, DOCX, and TXT files
     const allowedTypes = [
       'application/pdf',
+      'application/x-pdf',
+      'application/acrobat',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'text/plain'
     ];
@@ -21,6 +23,7 @@ const upload = multer({
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
+      console.error('Rejected file type:', file.mimetype);
       cb(new Error('Invalid file type. Only PDF, DOCX, and TXT files are allowed.'), false);
     }
   }
@@ -34,28 +37,33 @@ const upload = multer({
 router.post('/', upload.single('resume'), async (req, res, next) => {
   try {
     if (!req.file) {
+      console.error('No file uploaded or invalid file type.');
       return res.status(400).json({
         error: 'No file uploaded',
-        message: 'Please upload a resume file'
+        message: 'Please upload a valid PDF, DOCX, or TXT resume file.'
       });
     }
-
     const { originalname, mimetype, buffer } = req.file;
-    
     console.log(`📁 Processing file: ${originalname} (${mimetype})`);
-
     // Parse the document
-    const parsedText = await parseDocument(buffer, mimetype);
-    
-    if (!parsedText || parsedText.trim().length === 0) {
+    let parsedText;
+    try {
+      parsedText = await parseDocument(buffer, mimetype);
+    } catch (parseErr) {
+      console.error('Document parsing failed:', parseErr);
       return res.status(400).json({
         error: 'Document parsing failed',
-        message: 'Could not extract text from the uploaded file. Please ensure the file contains readable text.'
+        message: 'Could not extract text from the uploaded file. Please ensure the file contains readable, selectable text (not a scanned image).'
       });
     }
-
+    if (!parsedText || parsedText.trim().length === 0) {
+      console.error('Parsed text is empty.');
+      return res.status(400).json({
+        error: 'Document parsing failed',
+        message: 'Could not extract text from the uploaded file. Please ensure the file contains readable, selectable text (not a scanned image).'
+      });
+    }
     console.log(`✅ Successfully parsed ${originalname}. Text length: ${parsedText.length} characters`);
-
     res.json({
       success: true,
       data: {
@@ -67,10 +75,12 @@ router.post('/', upload.single('resume'), async (req, res, next) => {
       },
       timestamp: new Date().toISOString()
     });
-
   } catch (error) {
     console.error('Upload error:', error);
-    next(error);
+    res.status(500).json({
+      error: 'Internal server error',
+      message: 'An unexpected error occurred during file upload. Please try again or use a different file.'
+    });
   }
 });
 

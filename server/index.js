@@ -3,10 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
-const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config();
+require('dotenv').config();
 
 // Import routes
 const analyzeRoutes = require('./routes/analyze');
