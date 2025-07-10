@@ -29,8 +29,23 @@ app.use('/api/', limiter);
 app.use(compression());
 
 // CORS configuration
+const allowedOrigins = [
+  'https://ats-resume-checker-frontend.onrender.com', // Production frontend
+  'http://localhost:3000', // Development frontend
+  'http://localhost:3001'  // Alternative development port
+];
+
 app.use(cors({
-  origin: 'https://ats-resume-checker-frontend.onrender.com', // Hardcoded frontend URL for CORS
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 

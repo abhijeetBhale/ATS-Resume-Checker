@@ -35,7 +35,7 @@ const AnalysisPage = () => {
       formData.append('resume', file);
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/upload`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/upload`,
         formData,
         {
           headers: {
@@ -85,7 +85,7 @@ const AnalysisPage = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/analyze`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/analyze`,
         {
           resumeText: resumeText.trim(),
           jobDescription: jobDescription.trim(),
